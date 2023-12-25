@@ -58,7 +58,7 @@ async function run() {
         const id = req.params.id;
         const filter = { _id: new ObjectId(id) }
         const task = req.body;
-        console.log(task);
+        // console.log(task);
         const updatedTask = {
           $set: {
             taskName: task.taskName,
@@ -69,6 +69,20 @@ async function run() {
           }
         }
         const result = await taskCollection.updateOne(filter, updatedTask)
+        res.send(result)
+      })
+
+    app.patch('/task-status/:id', async (req, res) => {
+        const id = req.params.id;
+        const filter = { _id: new ObjectId(id) }
+        const newStatus = req.body;
+        // console.log(task);
+        const updatedStatus = {
+          $set: {
+            status : newStatus?.newStatus
+          }
+        }
+        const result = await taskCollection.updateOne(filter, updatedStatus)
         res.send(result)
       })
 
